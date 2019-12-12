@@ -117,8 +117,10 @@ router.get("/updatehistory", (req, res, next) => {
 
 // detail of a coin
 
-router.get("/detail/:id", (req, res, next) => {
-  const { _id } = req.body;
+router.post("/detail/:_id", (req, res, next) => {
+  console.log("Tiene que ser lo que llega",req.params);
+  
+  const { _id } = req.params;
 
   Coins.findById({ _id })
     .then((coin) => {
