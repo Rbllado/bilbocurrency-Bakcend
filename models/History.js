@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const Schema = new Schema;
+const Schema = mongoose.Schema;
 
 const HistorySchema = new Schema({
     symbol:  {type: String, required: true}, 
     value: []
 })
 
-const History = mongoose.model("Favorite", HistorySchema);
+const History = mongoose.model("History", HistorySchema);
 
 module.exports = History;

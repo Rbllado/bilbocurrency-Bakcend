@@ -11,6 +11,8 @@ require('dotenv').config();
 
 const auth = require('./routes/auth');
 const coins = require('./routes/coinsRoute');
+// const history = require("./routes/historyRoute");
+
 
 
 // MONGOOSE CONNECTION
