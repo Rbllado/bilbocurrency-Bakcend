@@ -5,6 +5,7 @@ const OwnCoinsSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   type: { type: String, required: true },
+  id:{ type: Number, required: true },
   symbol: { type: String, required: true },
   img: { type: String },
   description: { type: String },

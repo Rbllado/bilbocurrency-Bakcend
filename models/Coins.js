@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const coinSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
+  id:{ type: Number, required: true },
   tags: [],
   // tags: { type: String, required: true },
   symbol: { type: String, required: true },
