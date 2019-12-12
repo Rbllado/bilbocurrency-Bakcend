@@ -117,12 +117,13 @@ router.get("/updatehistory", (req, res, next) => {
 
 // detail of a coin
 
-router.get("/:id", (req, res, next) => {
+router.get("/detail/:id", (req, res, next) => {
   const { _id } = req.body;
 
   Coins.findById({ _id })
-    .then(() => {
-      console.log();
+    .then((coin) => {
+      console.log(coin);
+      res.send(coin);
     })
     .catch(err => console.log(err));
 });
