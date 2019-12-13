@@ -131,8 +131,6 @@ router.post("/detail/:_id", (req, res, next) => {
 });
 
 
-
-
 //We connect to the databse and find all the coins from Model coins
 
 router.get("/", function(req, res, next) {

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const Schema = new Schema;
+const Schema = mongoose.Schema;
 
 const FavoritesSchema = new Schema({
-    listCoin: String
+    listCoin: []
 })
 
 const Favorites = mongoose.model("Favorite", FavoritesSchema);

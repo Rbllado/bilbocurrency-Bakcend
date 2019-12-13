@@ -11,6 +11,7 @@ require('dotenv').config();
 
 const auth = require('./routes/auth');
 const coins = require('./routes/coinsRoute');
+const favorites = require("./routes/favouriteRoute");
 // const history = require("./routes/historyRoute");
 
 
@@ -61,6 +62,12 @@ app.use(
   }),
 );
 
+// app.use((req, res, next) => {
+//   app.locals.currentUser = req.session.currentUser;
+//   console.log(app.locals.currentUser);
+//   next();
+// });
+
 // MIDDLEWARE
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -73,6 +80,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', auth);
 // If I have localhost:5000/coins --> the route file is coinsRoute.js in route folde
 app.use("/coins", coins);
+app.use("/favorites", favorites);
 
 
 // ERROR HANDLING
