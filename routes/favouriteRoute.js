@@ -20,6 +20,23 @@ router.post("/:_id", (req, res, next) => {
     .catch(err => console.log(err));
 });
 
+router.post("/remove/:_id", (req, res, next) => {
+    const ObjectId = req.params._id;
+
+    const userId = req.session.currentUser._id;
+
+
+    User.findByIdAndUpdate(userId, {$pull:{ favorites: ObjectId }})
+    .then( (user) => {
+        console.log("User:" , user);
+        res.json(user);
+    })
+    .catch( (err) => console.log(err));
+})
+
+
+
+
 router.get("/", (req, res, next) => {
   
   
