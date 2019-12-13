@@ -21,7 +21,13 @@ router.post("/:_id", (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
-  console.log("Hola otra vez:", req.session.currentUser._id);
+  
+  
+  console.log("Session: ",req.session);
+  
+    // console.log("Hola otra vez:", req.session.currentUser._id);
+
+
 
   const userId = req.session.currentUser._id;
 
