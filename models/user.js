@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: String,
   password: String,
-  favorites: [{type: Schema.Types.ObjectId , ref: "Favorite"}],
+  favorites: [{type: Schema.Types.ObjectId , ref: "Coin"}],
 }, {
   timestamps: {
     createdAt: 'created_at',

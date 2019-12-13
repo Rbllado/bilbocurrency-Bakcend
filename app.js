@@ -62,6 +62,8 @@ app.use(
   }),
 );
 
+
+
 // app.use((req, res, next) => {
 //   app.locals.currentUser = req.session.currentUser;
 //   console.log(app.locals.currentUser);
@@ -81,6 +83,7 @@ app.use('/auth', auth);
 // If I have localhost:5000/coins --> the route file is coinsRoute.js in route folde
 app.use("/coins", coins);
 app.use("/favorites", favorites);
+
 
 
 // ERROR HANDLING
