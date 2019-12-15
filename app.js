@@ -12,6 +12,7 @@ require('dotenv').config();
 const auth = require('./routes/auth');
 const coins = require('./routes/coinsRoute');
 const favorites = require("./routes/favouriteRoute");
+const ownCoins = require("./routes/ownCoinsRoute");
 // const history = require("./routes/historyRoute");
 
 
@@ -83,6 +84,8 @@ app.use('/auth', auth);
 // If I have localhost:5000/coins --> the route file is coinsRoute.js in route folde
 app.use("/coins", coins);
 app.use("/favorites", favorites);
+app.use("/owncoins", ownCoins);
+
 
 
 

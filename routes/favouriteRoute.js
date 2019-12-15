@@ -8,9 +8,11 @@ router.post("/:_id", (req, res, next) => {
 
   const userId = req.session.currentUser._id;
 
+//   Now is adding the same coind more than one time.
   User.findByIdAndUpdate(
     { _id: userId },
-    { $push: { favorites: { _id } } },
+    // { $push: { favorites: { _id } } },
+    { $push: { favorites: {_id} } },
     { new: true }
   )
     .then(elem => {
@@ -21,30 +23,22 @@ router.post("/:_id", (req, res, next) => {
 });
 
 router.post("/remove/:_id", (req, res, next) => {
-    const ObjectId = req.params._id;
+  const ObjectId = req.params._id;
 
-    const userId = req.session.currentUser._id;
+  const userId = req.session.currentUser._id;
 
-
-    User.findByIdAndUpdate(userId, {$pull:{ favorites: ObjectId }})
-    .then( (user) => {
-        console.log("User:" , user);
-        res.json(user);
+  User.findByIdAndUpdate(userId, { $pull: { favorites: ObjectId } })
+    .then(user => {
+      console.log("User:", user);
+      res.json(user);
     })
-    .catch( (err) => console.log(err));
-})
-
-
-
+    .catch(err => console.log(err));
+});
 
 router.get("/", (req, res, next) => {
-  
-  
-  console.log("Session: ",req.session);
-  
-    // console.log("Hola otra vez:", req.session.currentUser._id);
+  console.log("Session: ", req.session);
 
-
+  // console.log("Hola otra vez:", req.session.currentUser._id);
 
   const userId = req.session.currentUser._id;
 

@@ -5,6 +5,7 @@ const userSchema = new Schema({
   username: String,
   password: String,
   favorites: [{type: Schema.Types.ObjectId , ref: "Coin"}],
+  owncoins: [{type: Schema.Types.ObjectId , ref: "OwnCoin"}],
 }, {
   timestamps: {
     createdAt: 'created_at',

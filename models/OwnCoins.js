@@ -10,7 +10,7 @@ const OwnCoinsSchema = new Schema({
   img: { type: String },
   description: { type: String },
   web: { type: String },
-  history: [{type: Schema.Types.ObjectId , ref: "History"}]
+  // history: [{type: Schema.Types.ObjectId , ref: "History"}]
 });
 
 const OwnCoin = mongoose.model("OwnCoin", OwnCoinsSchema);
