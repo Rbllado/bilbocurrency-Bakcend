@@ -4,7 +4,7 @@ const Coins = require("./../models/Coins");
 const History = require("./../models/History");
 var axios = require("axios");
 
-// var stringNum = "";
+var stringNum = "";
 
 // for (let i = 0; i < 100; i++) {
 //   Coins.find()
