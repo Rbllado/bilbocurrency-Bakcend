@@ -6,13 +6,13 @@ var axios = require("axios");
 
 var stringNum = "";
 
-// for (let i = 0; i < 100; i++) {
-//   Coins.find()
-//     .then(listOfCoins => {
-//       stringNum = stringNum + listOfCoins[i].id + ",";
-//     })
-//     .catch(err => console.log(err));
-// }
+for (let i = 0; i < 100; i++) {
+  Coins.find()
+    .then(listOfCoins => {
+      stringNum = stringNum + listOfCoins[i].id + ",";
+    })
+    .catch(err => console.log(err));
+}
 
 // This one is to take a the list of coins from
 router.get("/createdbCoin", function(req, res, next) {
@@ -29,19 +29,19 @@ router.get("/createdbCoin", function(req, res, next) {
 
     .then(response => {
       // // Create a copy from API to my DB
-       for(let i=0; 1 < 100; i++){
-         const { name, tags, symbol, img, cmr_rank, description, web, id  } = response.data.data[i];
-         const {price} = response.data.data[i].quote.USD;
+      //  for(let i=0; 1 < 100; i++){
+      //    const { name, tags, symbol, img, cmr_rank, description, web, id  } = response.data.data[i];
+      //    const {price} = response.data.data[i].quote.USD;
 
-         Coins.create( { name, price, tags, symbol, img, cmr_rank, symbol, description, web, id  } )
-         .then(insertion => {
-           //console.log("He entrado en insertion", i , insertion);
-         });
+      //    Coins.create( { name, price, tags, symbol, img, cmr_rank, symbol, description, web, id  } )
+      //    .then(insertion => {
+      //      console.log("He entrado en insertion", i , insertion);
+      //    });
 
-           History.create({symbol , value: price })
-           .then( (history) => console.log('hisotry created'))
-           .catch( (err) => console.log(err));
-      }
+      //      History.create({symbol , value: price })
+      //      .then( (history) => console.log('hisotry created'))
+      //      .catch( (err) => console.log(err));
+      // }
       res.status(201).json(response.data);
     })
     .catch(err => console.log(err));
