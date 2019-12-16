@@ -3,21 +3,28 @@ var router = express.Router();
 const Favorites = require("../models/Favorites");
 const User = require("../models/User");
 
-router.post("/:_id", (req, res, next) => {
+router.post("/:_id", async (req, res, next) => {
   const _id = req.params._id;
 
   const userId = req.session.currentUser._id;
 
-//   Now is adding the same coind more than one time.
-  User.findByIdAndUpdate(
-    { _id: userId },
-    // { $push: { favorites: { _id } } },
-    { $push: { favorites: {_id} } },
-    { new: true }
-  )
-    .then(elem => {
-      console.log(elem);
-      res.status(200).json(elem);
+  User.find({ _id: userId })
+    .then(user => {
+      console.log(user[0].favorites);
+      const favorites = user[0].favorites;
+      if (favorites.includes(_id)) {
+        console.log("Esta dentro");
+      } else {
+        User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: { favorites: { _id } } },
+          { new: true }
+        )
+          .then(elem => {
+            res.status(200).json(elem);
+          })
+          .catch(err => console.log(err));
+      }
     })
     .catch(err => console.log(err));
 });
