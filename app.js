@@ -36,7 +36,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN],
+    origin: [process.env.PUBLIC_DOMAIN, "https://bilbocurrency.herokuapp.com"],
   }),
 );
 // app.use((req, res, next) => {
@@ -86,6 +86,13 @@ app.use("/coins", coins);
 app.use("/favorites", favorites);
 app.use("/owncoins", ownCoins);
 
+
+
+// ROUTE FOR SERVING REACT APP (index.html)
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 
 
