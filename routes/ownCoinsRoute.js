@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var OwnCoins = require("../models/OwnCoins");
-var User = require("./../models/User");
+var User = require("../models/User");
 
 // include CLOUDINARY:
 const uploader = require("../configs/cloudinary-setup");
