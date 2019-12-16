@@ -4,23 +4,33 @@ var OwnCoins = require("../models/OwnCoins");
 var User = require("../models/User");
 
 // include CLOUDINARY:
-const uploader = require("../configs/cloudinary-setup");
+const parser = require("../configs/cloudinary-setup");
 
 var _id = "";
 
-router.post("/add", uploader.single("img"), async (req, res, next) => {
+
+router.post("/add/image",parser.single("img"), (req, res, next) =>{
+
+    if (!req.file) {
+        next(new Error("No file uploaded!"));
+        return;
+      }
+
+      
+      
+    // from cloud that is the parsers
+      const img = req.file_secure_url;
+      console.log("img : ",img);
+      res.json(img);
+} )
+
+router.post("/add",  async (req, res, next) => {
   const { name, price, type, id, symbol, img, description, web } = req.body;
 
   const userId = req.session.currentUser._id;
 
   console.log("_id dentro de antes promise", _id);
-
-//   if (!req.file) {
-//     next(new Error("No file uploaded!"));
-//     return;
-//   }
-
-//   img = req.file_secure_url;
+  console.log('req image', req);
 
   await User.findById(userId)
     .then(() => {
