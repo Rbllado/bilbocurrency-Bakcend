@@ -13,6 +13,7 @@ const auth = require('./routes/auth');
 const coins = require('./routes/coinsRoute');
 const favorites = require("./routes/favouriteRoute");
 const ownCoins = require("./routes/ownCoinsRoute");
+const historyCoin = require("./routes/historyRoute");
 // const history = require("./routes/historyRoute");
 
 
@@ -85,6 +86,7 @@ app.use('/auth', auth);
 app.use("/coins", coins);
 app.use("/favorites", favorites);
 app.use("/owncoins", ownCoins);
+app.use("/history", historyCoin);
 
 
 
