@@ -9,7 +9,7 @@ const parser = require("../configs/cloudinary-setup");
 var _id = "";
 
 
-router.post("/add/image",parser.single("img"), (req, res, next) =>{
+router.post("/image",parser.single("img"), (req, res, next) =>{
 
     if (!req.file) {
         next(new Error("No file uploaded!"));
@@ -17,11 +17,11 @@ router.post("/add/image",parser.single("img"), (req, res, next) =>{
       }
 
       
-      
     // from cloud that is the parsers
       const img = req.file_secure_url;
       console.log("img : ",img);
       res.json(img);
+
 } )
 
 router.post("/add",  async (req, res, next) => {

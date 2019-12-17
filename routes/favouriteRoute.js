@@ -13,7 +13,8 @@ router.post("/:_id", async (req, res, next) => {
       console.log(user[0].favorites);
       const favorites = user[0].favorites;
       if (favorites.includes(_id)) {
-        console.log("Esta dentro");
+        console.log("Ya en  favoritos");
+        res.send("djvfv")
       } else {
         User.findByIdAndUpdate(
           { _id: userId },
