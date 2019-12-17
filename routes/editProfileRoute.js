@@ -37,7 +37,6 @@ router.post("/", (req, res, next) => {
 
       // Should be de new Password from the form edit
       const password = newpassword;
-      console.log('Nueva password :' ,password);
       
 
       // > If username doesn't exist, generate salts and hash the password
@@ -47,11 +46,10 @@ router.post("/", (req, res, next) => {
       // > Create the user in the DB
       User.update({ username, password: hashedPassword })
         .then(newUserObj => {
-          console.log("password corrects", passwordCorrect);
-          console.log("Estoy password:", password);
 
           req.session.currentUser = userData;
           res.json(newUserObj);
+          
         })
         .catch(err => {
           res.render("auth/signup", {
