@@ -8,35 +8,26 @@ const parser = require("../configs/cloudinary-setup");
 
 var _id = "";
 
+// Cloudinary upload
 
-router.post("/image",parser.single("img"), (req, res, next) =>{
+router.post("/image", parser.single("img"), (req, res, next) => {
+  if (!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
 
-    if (!req.file) {
-        next(new Error("No file uploaded!"));
-        return;
-      }
+  console.log("Image en background");
 
-      console.log('Image en background');
-      
+  // from cloud that is the parsers
+  const img = req.file.secure_url;
+  console.log("img : ", img);
+  res.json(img);
+});
 
-      
-    // from cloud that is the parsers
-      const img = req.file.secure_url;
-      console.log("img : ", img);
-      res.json(img);
+router.post("/add", async (req, res, next) => {
 
-} )
-
-router.post("/add",  async (req, res, next) => {
-
-  console.log("req body:", req.body);
-  
   const { name, price, type, id, symbol, img, description, web } = req.body;
-
   const userId = req.session.currentUser._id;
-
-  console.log("_id dentro de antes promise", _id);
-  console.log('req image', req);
 
   await User.findById(userId)
     .then(() => {
@@ -61,6 +52,23 @@ router.post("/add",  async (req, res, next) => {
     })
     .catch(err => console.log(err));
 });
+
+
+
+router.post("/remove/:_id", (req, res, next) => {
+  const ObjectId = req.params._id;
+
+  const userId = req.session.currentUser._id;
+
+  User.findByIdAndUpdate(userId, { $pull: { owncoins: ObjectId } })
+    .then(user => {
+      res.json(user);
+    })
+    .catch(err => console.log(err));
+});
+
+
+
 
 router.get("/", (req, res, next) => {
   const userId = req.session.currentUser._id;
