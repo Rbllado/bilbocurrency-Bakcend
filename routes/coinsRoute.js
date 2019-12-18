@@ -85,7 +85,7 @@ router.get("/createdbCoin", function(req, res, next) {
 router.get("/updatehistory", (req, res, next) => {
   axios
     .get(
-      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=3e18416b-942d-419a-89ab-8f8058b12944`
+      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`, { headers: { "X-CMC_PRO_API_KEY": process.env.KEY}}
     )
     .then(response => {
       // Here to go cross all the coins and update the value
@@ -128,29 +128,38 @@ router.post("/detail/:_id", (req, res, next) => {
 
 //We connect to the databse and find all the coins from Model coins
 
-router.get("/", function(req, res, next) {
-  axios
+router.get("/", async function(req, res, next) {
+  await axios
     .get(
-      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=3e18416b-942d-419a-89ab-8f8058b12944`
-    )
+        `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`, { headers: { "X-CMC_PRO_API_KEY": process.env.KEY}}
+      )
     .then(response => {
-      // Here to go cross all the coins and update the value
-      for (let i = 0; 1 < 100; i++) {
-        // history we have array of values and symbol
-        const price = response.data.data[i].quote.USD.price.toFixed(2);
-        const { symbol } = response.data.data[i];
-        // Add to values
-         Coins.findOneAndUpdate({ symbol }, { $set: { price } })
-          .then(() => {
-            // All coins with price updated
-            Coins.find()
-              .then(listOfCoins => {
-                res.status(200).json(listOfCoins);
-              })
-              .catch(err => console.log(err));
-          })
-          .catch(err => console.log(err));
-      }
+      
+      // if(!response){
+
+      // }else{
+
+        // }
+
+        // Here to go cross all the coins and update the price
+       for (let i = 0; 1 < 100; i++) {
+  
+          // history we have array of values and symbol 
+          const price = response.data.data[i].quote.USD.price;
+          const { symbol } = response.data.data[i];
+  
+          // Add to values
+          Coins.findOneAndUpdate({ symbol }, { $set: { price } })
+            .then(() => {
+              // All coins with price updated
+              Coins.find()
+                .then(listOfCoins => {
+                  res.status(200).json(listOfCoins);
+                })
+                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+        }
     })
     .catch(err => console.log(err));
 });
