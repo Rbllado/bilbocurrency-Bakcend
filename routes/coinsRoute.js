@@ -29,7 +29,6 @@ router.get("/createdbCoin", function(req, res, next) {
     )
 
     .then(response => {
-      
       // // Create a copy from API to my DB
       //  for(let i=0; 1 < 100; i++){
       //    const { name, tags, symbol, img, cmr_rank, description, web, id  } = response.data.data[i];
@@ -82,20 +81,15 @@ router.get("/createdbCoin", function(req, res, next) {
   Promise.all([promiseOne, promiseTwo]);
 });
 
-
-
-
 // Para actualizar la base de datos de history
 router.get("/updatehistory", (req, res, next) => {
   axios
     .get(
-      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=3e18416b-942d-419a-89ab-8f8058b12944`
+      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`, { headers: { "X-CMC_PRO_API_KEY": process.env.KEY}}
     )
     .then(response => {
-
       // Here to go cross all the coins and update the value
       for (let i = 0; 1 < 100; i++) {
-
         // history we have array of values and symbol
         const price = response.data.data[i].quote.USD.price;
         const { symbol } = response.data.data[i];
@@ -120,25 +114,52 @@ router.get("/updatehistory", (req, res, next) => {
 // detail of a coin
 
 router.post("/detail/:_id", (req, res, next) => {
-  console.log("Tiene que ser lo que llega",req.params);
-  
+  console.log("Tiene que ser lo que llega", req.params);
+
   const { _id } = req.params;
 
   Coins.findById({ _id })
-    .then((coin) => {
+    .then(coin => {
       console.log(coin);
       res.send(coin);
     })
     .catch(err => console.log(err));
 });
 
-
 //We connect to the databse and find all the coins from Model coins
 
-router.get("/", function(req, res, next) {
-  Coins.find()
-    .then(listOfCoins => {
-      res.status(200).json(listOfCoins);
+router.get("/", async function(req, res, next) {
+  await axios
+    .get(
+        `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`, { headers: { "X-CMC_PRO_API_KEY": process.env.KEY}}
+      )
+    .then(response => {
+      
+      // if(!response){
+
+      // }else{
+
+        // }
+
+        // Here to go cross all the coins and update the price
+       for (let i = 0; 1 < 100; i++) {
+  
+          // history we have array of values and symbol 
+          const price = response.data.data[i].quote.USD.price;
+          const { symbol } = response.data.data[i];
+  
+          // Add to values
+          Coins.findOneAndUpdate({ symbol }, { $set: { price } })
+            .then(() => {
+              // All coins with price updated
+              Coins.find()
+                .then(listOfCoins => {
+                  res.status(200).json(listOfCoins);
+                })
+                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+        }
     })
     .catch(err => console.log(err));
 });
