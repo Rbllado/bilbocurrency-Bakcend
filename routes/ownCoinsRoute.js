@@ -16,15 +16,21 @@ router.post("/image",parser.single("img"), (req, res, next) =>{
         return;
       }
 
+      console.log('Image en background');
+      
+
       
     // from cloud that is the parsers
-      const img = req.file_secure_url;
-      console.log("img : ",img);
+      const img = req.file.secure_url;
+      console.log("img : ", img);
       res.json(img);
 
 } )
 
 router.post("/add",  async (req, res, next) => {
+
+  console.log("req body:", req.body);
+  
   const { name, price, type, id, symbol, img, description, web } = req.body;
 
   const userId = req.session.currentUser._id;
