@@ -92,7 +92,6 @@ app.use("/editprofile", editProfile);
 
 
 
-
 // ROUTE FOR SERVING REACT APP (index.html)
 app.use((req, res, next) => {
   // If no routes match, send them the React HTML.
