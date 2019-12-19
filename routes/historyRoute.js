@@ -19,5 +19,19 @@ router.post("/:symbol", (req, res, next) => {
 })
 
 
+router.get("/", (req, res, next) => {
+
+    History.find()
+    .then( (historyCoin) => {
+        
+        res.status(200).json(historyCoin.slice(0, 20))
+        // res.json(historyCoin.value);
+
+    })
+    .catch( (err) => console.log(err));
+})
+
+
+
 
 module.exports = router;
