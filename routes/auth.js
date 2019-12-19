@@ -81,7 +81,7 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
       // .json
       .json(err);
     }else{
-      console.log('Req session', req.session);
+      req.session = null;
       
       res
         .status(204) //  No Content
