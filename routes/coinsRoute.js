@@ -85,7 +85,8 @@ router.get("/createdbCoin", function(req, res, next) {
 router.get("/updatehistory", (req, res, next) => {
   axios
     .get(
-      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`, { headers: { "X-CMC_PRO_API_KEY": process.env.KEY}}
+      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`,
+      { headers: { "X-CMC_PRO_API_KEY": process.env.KEY } }
     )
     .then(response => {
       // Here to go cross all the coins and update the value
@@ -131,35 +132,26 @@ router.post("/detail/:_id", (req, res, next) => {
 router.get("/", async function(req, res, next) {
   await axios
     .get(
-        `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`, { headers: { "X-CMC_PRO_API_KEY": process.env.KEY}}
-      )
+      `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`,
+      { headers: { "X-CMC_PRO_API_KEY": process.env.KEY } }
+    )
     .then(response => {
       
-      // if(!response){
-
-      // }else{
-
-        // }
-
         // Here to go cross all the coins and update the price
-       for (let i = 0; 1 < 100; i++) {
-  
-          // history we have array of values and symbol 
-          const price = response.data.data[i].quote.USD.price;
-          const { symbol } = response.data.data[i];
-  
-          // Add to values
-          Coins.findOneAndUpdate({ symbol }, { $set: { price } })
-            .then(() => {
-              // All coins with price updated
-              Coins.find()
-                .then(listOfCoins => {
-                  res.status(200).json(listOfCoins);
-                })
-                .catch(err => console.log(err));
-            })
-            .catch(err => console.log(err));
-        }
+        const coins = response.data.data;
+        const coinPromises = coins.map((coin, i) => {
+        const price = coin.quote.USD.price;
+        const { symbol } = coin;
+
+        return Coins.findOneAndUpdate({ symbol }, { $set: { price } });
+      });
+
+      Promise.all(coinPromises)
+      .then(listOfCoins => {
+        res.status(200).json(listOfCoins);
+      });
+
+     
     })
     .catch(err => console.log(err));
 });
