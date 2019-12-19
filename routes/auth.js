@@ -74,11 +74,19 @@ router.post(
 //  POST    '/logout'
 router.post('/logout', isLoggedIn, (req, res, next) => {
   const { username } = req.session.currentUser;
-  req.session.destroy();
-  res
-    .status(200) //  No Content
-    .json({ message: `User '${username}' logged out - session destroyed` });
-  return;
+  req.session.destroy(function (err){
+    if(err){
+      res
+      .status(404) //  No Content
+      // .json
+      .json(err);
+    }else{
+      res
+        .status(204) //  No Content
+        // .json
+        .send();
+    }
+  });
 });
 
 //  GET    '/private'   --> Only for testing - Same as /me but it returns a message instead
