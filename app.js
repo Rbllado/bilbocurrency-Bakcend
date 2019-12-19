@@ -59,7 +59,6 @@ app.use(
     secret: process.env.SECRET_SESSION,
     resave: true,
     saveUninitialized: true,
-    unset: "destroy",
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
     },
